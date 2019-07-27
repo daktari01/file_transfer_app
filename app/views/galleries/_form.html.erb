@@ -1,0 +1,26 @@
+<%= form_with(model: gallery, local: true) do |form| %>
+  <% if gallery.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(gallery.errors.count, "error") %> prohibited this gallery from being saved:</h2>
+
+      <ul>
+      <% gallery.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= form.label :description %>
+    <%= form.text_field :description %>
+    <%= form.label 'Upload single file' %>
+    <%= form.file_field :picture %>
+    <%= form.label 'Upload multiple files' %>
+    <%= form.file_field :uploads, multiple: true %>
+  </div>
+
+  <div class="actions">
+    <%= form.submit %>
+  </div>
+<% end %>
