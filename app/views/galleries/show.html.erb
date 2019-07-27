@@ -1,0 +1,18 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Description:</strong>
+  <%= @gallery.description %>
+  <%= image_tag(@gallery.picture, width: 200) if @gallery.picture.attached? %>
+  <strong>Uploads:</strong> <br/>
+  <% if @gallery.uploads.attached? %>
+    <% @gallery.uploads.each do |upload| %>
+      <%= link_to upload.filename, upload, target: '_blank' %> <br/>
+    <% end %>
+  <% else %>
+    <p>no uploads</p>
+  <% end %>
+</p>
+
+<%= link_to 'Edit', edit_gallery_path(@gallery) %> |
+<%= link_to 'Back', galleries_path %>
