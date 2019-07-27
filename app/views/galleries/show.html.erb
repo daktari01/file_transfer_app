@@ -2,12 +2,14 @@
 
 <p>
   <strong>Description:</strong>
-  <%= @gallery.description %>
-  <%= image_tag(@gallery.picture, width: 200) if @gallery.picture.attached? %>
+  <%= @gallery.description %><br/>
+  <%= link_to @gallery.picture.filename, @gallery.picture, target: '_blank' %>
+  <%= link_to 'download', rails_blob_path(@gallery.picture, disposition: "attachment") %> <br/>
   <strong>Uploads:</strong> <br/>
   <% if @gallery.uploads.attached? %>
     <% @gallery.uploads.each do |upload| %>
-      <%= link_to upload.filename, upload, target: '_blank' %> <br/>
+      <%= link_to upload.filename, upload, target: '_blank' %>
+      <%= link_to 'download', rails_blob_path(upload, disposition: "attachment") %> <br/>
     <% end %>
   <% else %>
     <p>no uploads</p>
