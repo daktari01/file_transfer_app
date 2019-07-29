@@ -1,20 +1,56 @@
-<p id="notice"><%= notice %></p>
+<div class="container">
+  <p id="notice"><%= notice %></p>
 
-<p>
-  <strong>Description:</strong>
-  <%= @gallery.description %><br/>
-  <%= link_to @gallery.picture.filename, @gallery.picture, target: '_blank' %>
-  <%= link_to 'download', rails_blob_path(@gallery.picture, disposition: "attachment") %> <br/>
-  <strong>Uploads:</strong> <br/>
-  <% if @gallery.uploads.attached? %>
-    <% @gallery.uploads.each do |upload| %>
-      <%= link_to upload.filename, upload, target: '_blank' %>
-      <%= link_to 'download', rails_blob_path(upload, disposition: "attachment") %> <br/>
+  <p>
+    <strong>Description:</strong>
+    <%= @gallery.description %><br/>
+    <%= link_to @gallery.picture.filename, @gallery.picture, target: '_blank' %>
+    <%= link_to 'download', rails_blob_path(@gallery.picture, disposition: "attachment"), :class => "btn btn-primary", :onclick => "move('singleBar')" %> <br/>
+    <div class="progress">
+      <div id="singleBar" class="progress-bar progress-bar-success progress-bar-striped" role="progressbar"
+      aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" style="width:10%">
+        10%
+      </div>
+    </div> <br/><br/>
+    <strong>Uploads:</strong> <br/>
+    <% if @gallery.uploads.attached? %>
+      <% @gallery.uploads.each do |upload| %>
+        <%= link_to upload.filename, upload, target: '_blank' %>
+        <% uploadId = upload.filename %>
+        <%= link_to 'download', rails_blob_path(upload, disposition: "attachment"), :class => "btn btn-primary uploadProgress", data:{uploadId: "#{uploadId}"} %><br><br>
+        <div class="progress">
+          <div id="<%= uploadId %>" class="progress-bar progress-bar-success progress-bar-striped">0%</div>
+        </div>
+      <% end %>
+    <% else %>
+      <p>no uploads</p>
     <% end %>
-  <% else %>
-    <p>no uploads</p>
-  <% end %>
-</p>
+  </p>
 
-<%= link_to 'Edit', edit_gallery_path(@gallery) %> |
-<%= link_to 'Back', galleries_path %>
+  <%= link_to 'Edit', edit_gallery_path(@gallery), :class => "btn btn-success" %>
+  <%= link_to 'Back', galleries_path, :class => "btn btn-info" %>
+</div>
+
+<script>
+$(window).ready(function() {
+
+  $('.uploadProgress').click(function(){
+    uploadId = $(this).attr('data-uploadId')
+    var id = setInterval(frame, 10);
+    frame(10)
+  })
+  
+  function frame(width) {
+    if (width >= 100) {
+      clearInterval(id);
+    } else {
+      width++; 
+      $(this).attr('style', width + '%'); 
+      $(this).html(width * 1  + '%');
+    }
+  }
+})
+</script>
+
+</body>
+</html>

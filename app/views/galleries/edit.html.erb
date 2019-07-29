@@ -1,6 +1,8 @@
-<h1>Editing Gallery</h1>
+<div class="container">
+  <h1>Editing Gallery</h1>
 
-<%= render 'form', gallery: @gallery %>
+  <%= render 'form', gallery: @gallery %><br>
 
-<%= link_to 'Show', @gallery %> |
-<%= link_to 'Back', galleries_path %>
+  <%= link_to 'Show', @gallery, class: "btn btn-primary" %> 
+  <%= link_to 'Back', galleries_path, class: "btn btn-info" %>
+</div>
